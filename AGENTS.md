@@ -123,10 +123,58 @@ Treat the following as significant changes unless repository-specific rules say 
 - removal of core capabilities
 - large cross-cutting refactors or migrations
 
+### Architecture Discussions and multi-AI review
+
+GitHub Discussions are the deliberation layer for significant changes. ADRs or `DECISIONS` are the final decision record, issues track execution, and pull requests contain implementation and verification. Do not use all four as interchangeable lifecycle state.
+
+When Discussions are enabled, significant changes should begin in the open-ended `Architecture` category. The discussion author may be a human or AI agent, but an AI-authored proposal must remain explicitly `Proposed` or `Reviewing` until the required human or maintainer approval exists.
+
+An Architecture Discussion must include at least:
+
+- Status
+- Context
+- Problem / Motivation
+- Constraints
+- Current Architecture
+- Proposed Direction
+- Alternatives
+- Open Questions
+- Impact / Blast Radius
+- Migration Strategy
+- Rollback Strategy
+- Testing / Verification Plan
+- Related evidence, branch, commit, or draft PR
+- Decision Owner and Required Approval
+
+AI reviewers must independently inspect repository evidence rather than merely restating another model's summary. Each review should state:
+
+```text
+Reviewer / Model
+Review Focus
+Position: Support | Support with Changes | Oppose | Need More Evidence
+Blocking Concerns
+Major Concerns
+Alternative
+Evidence
+Recommendation
+```
+
+Reviewers must distinguish verified repository facts from inference and architectural preference. Unless explicitly assigned implementation ownership, reviewers must not modify the core implementation during the deliberation phase.
+
+Multi-AI review is not a vote. The discussion owner must synthesize agreement, disagreements, missing evidence, unresolved questions, and items requiring human or maintainer judgment. Model count or majority opinion never replaces the repository's decision authority.
+
+Recommended lifecycle:
+
+`Proposed → Reviewing → Consensus Reached / Decision Required → Approved / Rejected → Closed`
+
+After required approval, record the final decision in an ADR or decision record, create implementation issues, and implement through normal task branches and PRs. Close the Discussion only after linking the final ADR, execution issues, and implementation PR, or after recording why no decision was adopted.
+
+If Discussions are not enabled, an issue or PR proposal may temporarily serve as the deliberation surface, but the same structure and approval rules apply.
+
 Before implementing a significant change:
 
 1. Create a recoverable checkpoint that preserves the verified pre-change state.
-2. Record a decision proposal in an ADR, decision document, issue, or PR proposal. Include Current State, Problem / Motivation, Alternatives Considered, Recommended Option, Impact / Blast Radius, Migration Strategy, Rollback Strategy, and Testing / Verification Plan.
+2. Create or update an Architecture Discussion for problem framing, alternatives, review, and unresolved questions. After discussion convergence and required approval, create or update the ADR or decision record that captures the final decision and rationale.
 3. Record the decision owner and approval status. An AI agent must not self-approve changes that materially affect external behavior, data integrity, the security model, deployment topology, canonical source, core architecture, or an irreversible/high-cost operation. Obtain explicit user or maintainer approval first.
 4. Do not hide an architecture change inside an ordinary feature or bug-fix PR. Prefer a separate PR; if separation is impractical, clearly isolate the architecture change and link the approved decision record.
 5. Prefer incremental, verifiable, reversible migrations. If rollback is impossible, document the irreversible risk and recovery plan before execution.
@@ -150,6 +198,6 @@ If a secret enters Git history, deleting the current file is not enough. Treat t
 
 ## Documentation and generated content
 
-README documentation should cover purpose, setup, configuration, development, and—when applicable—architecture and deployment. Record important architecture decisions in an ADR, `DECISIONS` document, issue, or PR. Do not turn the README into a large collection of temporary TODOs.
+README documentation should cover purpose, setup, configuration, development, and—when applicable—architecture and deployment. Record important architecture decisions in an ADR or `DECISIONS` document after deliberation. Do not turn the README into a large collection of temporary TODOs.
 
 For content synchronized between GitHub and another system such as Google Drive, explicitly identify the canonical source and synchronization direction. Do not create an unmanaged, manually edited two-way copy.
