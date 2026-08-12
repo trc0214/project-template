@@ -1,0 +1,136 @@
+title: "[Architecture] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this Discussion for significant technical or architecture decisions before implementation. Discussion is the deliberation layer; the final decision belongs in an ADR or decision record.
+
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - Proposed
+        - Reviewing
+        - Consensus Reached
+        - Decision Required
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Describe the current project state and why this decision is being raised now.
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Motivation
+      description: Define the problem to solve without assuming the proposed solution is correct.
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: List compatibility, security, performance, delivery, platform, data, or governance constraints.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_architecture
+    attributes:
+      label: Current Architecture
+      description: Summarize the relevant current architecture using repository evidence.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_direction
+    attributes:
+      label: Proposed Direction
+      description: Describe the current proposal. Keep it explicitly proposed until approval exists.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Compare credible alternatives, including retaining the current design when relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: open_questions
+    attributes:
+      label: Open Questions
+      description: List the questions reviewers should resolve or challenge.
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact / Blast Radius
+      description: Identify affected modules, APIs, schemas, data, security boundaries, dependencies, infrastructure, deployment, and users.
+    validations:
+      required: true
+
+  - type: textarea
+    id: migration
+    attributes:
+      label: Migration Strategy
+      description: Describe staged rollout, compatibility, sequencing, and transition steps.
+    validations:
+      required: true
+
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback / Recovery Strategy
+      description: Explain how to restore the previous verified state. If rollback is impossible, state that explicitly.
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification
+    attributes:
+      label: Testing / Verification Plan
+      description: Define what evidence is required before implementation can be considered safe and complete.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Related Evidence
+      description: Link relevant branch, commit, draft PR, benchmark, docs, incidents, or experiments.
+    validations:
+      required: false
+
+  - type: input
+    id: decision_owner
+    attributes:
+      label: Decision Owner
+      description: Identify the person or maintainer responsible for the final decision.
+    validations:
+      required: true
+
+  - type: textarea
+    id: required_approval
+    attributes:
+      label: Required Approval
+      description: State who must approve this decision before implementation proceeds.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## AI reviewer response format
+        Each independent AI reviewer should identify Reviewer / Model, Review Focus, Position (Support / Support with Changes / Oppose / Need More Evidence), Blocking Concerns, Major Concerns, Alternative, Evidence, and Recommendation. Reviews must distinguish verified repository facts from inference and preference. Multi-AI review is advisory, not a vote.
