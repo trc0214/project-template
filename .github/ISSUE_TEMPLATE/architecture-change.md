@@ -1,55 +1,60 @@
 ---
-name: Architecture change
-about: Propose a significant technical or architecture change before implementation
-title: "architecture: "
+name: Architecture implementation
+about: Track implementation of an approved significant technical or architecture decision
+title: "architecture: implement "
 labels: "architecture"
 assignees: ""
 ---
 
-## Current State
+> Use this issue only after architecture deliberation has converged and the required approval exists. Discussion belongs in GitHub Discussions; the final decision belongs in an ADR or decision record.
 
-## Problem / Motivation
+## Approved Decision
 
-## Decision Drivers
+Architecture Discussion:
 
-## Alternatives Considered
+ADR / Decision Record:
 
-### Option A
+Decision Owner:
 
-### Option B
+Approved By:
 
-## Recommended Option
+Approval Status:
 
-## Impact / Blast Radius
-
-Describe affected modules, services, APIs, schemas, data, security boundaries, dependencies, infrastructure, deployment, users, and operational processes.
-
-## Migration Strategy
-
-## Rollback Strategy
-
-If rollback is impossible, state that explicitly and describe the recovery plan.
-
-## Testing / Verification Plan
-
-## Decision Owner
-
-## Approval Status
-
-- [ ] Pending
 - [ ] Approved
-- [ ] Rejected
 
-Approval by:
+## Implementation Scope
+
+Describe exactly what this issue will implement from the approved decision.
+
+## Out of Scope
+
+List related improvements or redesigns that are intentionally excluded.
+
+## Migration Plan
+
+## Rollback / Recovery Plan
+
+## Acceptance Criteria
+
+- [ ] Approved architecture is implemented within scope
+- [ ] Compatibility and migration requirements are satisfied
+- [ ] Tests / verification defined by the decision record pass
+- [ ] Required documentation is updated
+
+## Dependencies / Sequencing
+
+## Risks
 
 ## Implementation Tracking
 
-Related branch / PR:
+Branch:
+
+Pull Request:
 
 ## Follow-up Documentation
 
 - [ ] Architecture documentation
 - [ ] README / AGENTS.md
-- [ ] API / schema documentation
-- [ ] Deployment documentation
-- [ ] ADR / decision record
+- [ ] API / schema documentation where applicable
+- [ ] Deployment documentation where applicable
+- [ ] ADR / decision record reflects the final implementation state
