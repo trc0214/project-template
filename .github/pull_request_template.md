@@ -13,11 +13,13 @@
 ## Technical / Architecture Decision Impact
 
 - [ ] No Significant Change is introduced
-- [ ] Significant Change is introduced and an approved decision record is linked below
+- [ ] Significant Change is introduced and the approved deliberation/decision records are linked below
 
-Decision record / ADR / issue:
-Decision owner:
-Approval status:
+Architecture Discussion:
+ADR / Decision Record:
+Decision Owner:
+Approved By:
+Approval Status:
 Migration strategy:
 Rollback strategy:
 
@@ -36,8 +38,10 @@ Rollback strategy:
 - [ ] Tests were run where applicable
 - [ ] Lint/type-check/build were run where applicable
 - [ ] Pre-existing failures were distinguished from new regressions
-- [ ] Significant architecture changes have a decision record and required approval
+- [ ] Significant architecture changes have an Architecture Discussion or documented fallback deliberation
+- [ ] Required approval exists and the final ADR / decision record is linked
 - [ ] Migration and rollback implications were documented where applicable
+- [ ] Implementation issues match the approved decision scope
 - [ ] No secrets were committed
 - [ ] No debug or temporary artifacts were committed
 - [ ] Documentation was updated where necessary
