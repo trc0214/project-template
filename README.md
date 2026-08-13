@@ -24,7 +24,7 @@ Choose the appropriate visibility for the project.
 5. For a public or reusable repository, explicitly choose and add a `LICENSE`.
 6. Add project-specific GitHub Actions only when the repository has real repeatable work such as test, lint, type check, build, code generation, or deployment. Do not add empty CI.
 7. Use branch protection / rulesets when enforcement is needed.
-8. If the project has meaningful release versions, use Git tags and GitHub Releases. Add `CHANGELOG.md` only when a file-based changelog is actually useful.
+8. If the project has meaningful release versions, use Git tags and GitHub Releases. Unless the ecosystem requires another scheme, use `vMAJOR.MINOR.PATCH` tags and Semantic Versioning; do not move or reuse published release tags. Add `CHANGELOG.md` only when a file-based changelog is actually useful.
 
 ## GitHub-native workflow
 
