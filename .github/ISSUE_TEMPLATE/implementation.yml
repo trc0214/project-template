@@ -6,10 +6,10 @@ body:
     id: related_discussion
     attributes:
       label: Related Discussion
-      description: Link the approved Discussion when this Issue implements a significant technical decision. Otherwise enter N/A.
-      placeholder: https://github.com/OWNER/REPO/discussions/123 or N/A
+      description: Link the approved Discussion when this Issue implements a significant technical decision.
+      placeholder: https://github.com/OWNER/REPO/discussions/123
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: scope
@@ -34,9 +34,9 @@ body:
     id: dependencies
     attributes:
       label: Dependencies / Sequencing
-      description: Link blockers or prerequisites. Enter N/A if none.
+      description: Link blockers or prerequisites when they exist.
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: verification
