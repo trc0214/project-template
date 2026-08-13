@@ -13,7 +13,7 @@ Keep project-specific commands, protected areas, ownership, architecture constra
 
 ## Repository workflow
 
-GitHub is the canonical source for source code, branches, commits, Discussions, Issues, pull requests, checks, Releases, and implementation state. Chat history must not be the only project record.
+GitHub is the canonical source for source code, branches, commits, Discussions, Issues, pull requests, checks, Releases, repository-coupled technical research/documentation, and implementation state. Chat history must not be the only project record.
 
 - Keep `main` stable and do not perform feature development directly on it.
 - Use one short-lived branch per task. AI branches use `ai/<agent>/<task>`; general work may use `feature/`, `fix/`, `docs/`, `refactor/`, `test/`, or `chore/`.
@@ -30,6 +30,15 @@ Use GitHub's native objects instead of parallel tracking documents:
 - **Pull Request**: actual code changes, review, checks, and merge decision.
 
 Do not create ADR, decision-ledger, AI-review-report, or custom lifecycle documents unless this project has a concrete need that GitHub does not cover.
+
+## Research and documentation placement
+
+- Use GitHub Discussion for repository-specific technical investigation or option comparison while the technical direction is still unresolved.
+- Keep durable knowledge that is tightly coupled to this codebase in `docs/` only when future maintainers need it and it should evolve with the implementation.
+- Prefer reproducible evidence in `tests/`, `benchmarks/`, `scripts/`, or other executable artifacts over a static research report when practical.
+- Keep domain, business, user, course, competition, requirements, and other research that remains useful independently of this repository in the external project context (Google Drive in this workspace); link the source instead of copying it into the repository.
+
+Do not create a generic `docs/research/` directory merely because research occurred.
 
 Significant changes include public API breaking changes, core architecture or runtime migrations, destructive schema migrations, authentication / authorization model changes, deployment-topology changes, and large cross-cutting refactors. Do not implement these without the required maintainer or user approval.
 
