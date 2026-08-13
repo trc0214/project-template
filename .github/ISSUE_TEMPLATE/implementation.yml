@@ -1,0 +1,47 @@
+name: Implementation
+description: Track approved or otherwise well-defined implementation work
+title: ""
+body:
+  - type: input
+    id: related_discussion
+    attributes:
+      label: Related Discussion
+      description: Link the approved Discussion when this Issue implements a significant technical decision. Otherwise enter N/A.
+      placeholder: https://github.com/OWNER/REPO/discussions/123 or N/A
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What must this Issue implement?
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What observable conditions must be true before this Issue can close?
+      placeholder: |
+        - [ ] Requirement 1
+        - [ ] Requirement 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies / Sequencing
+      description: Link blockers or prerequisites. Enter N/A if none.
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification
+      description: What tests, checks, build, or other evidence are required?
+    validations:
+      required: true

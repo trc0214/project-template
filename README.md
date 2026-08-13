@@ -1,10 +1,10 @@
 # General GitHub Project Template
 
-This repository is a technology-neutral starting point for new GitHub projects. It standardizes repository governance, AI-agent collaboration, project intake, GitHub-native architecture decisions, Issues, pull requests, handoffs, and secrets hygiene without assuming a particular language or framework.
+A technology-neutral starting point for new repositories. It keeps the baseline limited to GitHub-native workflow, essential repository files, and concise AI-agent instructions.
 
 ## Create a project
 
-Use GitHub's **Use this template** button or the GitHub CLI:
+Use GitHub's **Use this template** button or:
 
 ```bash
 gh repo create my-project \
@@ -13,55 +13,39 @@ gh repo create my-project \
   --clone
 ```
 
-Choose the visibility that is appropriate for the new project.
+Choose the appropriate visibility for the project.
 
-## Customize immediately
+## Customize after creation
 
-Every generated project should promptly:
+1. Replace this README with project-specific Purpose, Setup, Configuration, and—when applicable—Architecture, Development / Testing, and Deployment.
+2. Update `AGENTS.md` with real project commands, protected areas, ownership, generated-code rules, and other project-specific constraints.
+3. Adjust `.gitignore` and `.env.example` for the selected stack.
+4. Add the ecosystem-standard dependency manifest and lockfile when applicable.
+5. For a public or reusable repository, explicitly choose and add a `LICENSE`.
+6. Add project-specific GitHub Actions only when the repository has real repeatable work such as test, lint, type check, build, code generation, or deployment. Do not add empty CI.
+7. Use branch protection / rulesets when enforcement is needed.
+8. If the project has meaningful release versions, use Git tags and GitHub Releases. Add `CHANGELOG.md` only when a file-based changelog is actually useful.
 
-1. Replace this README with project-specific purpose, setup, configuration, development, architecture, and deployment information as applicable.
-2. Update `AGENTS.md` with real test, lint, type-check, build, deployment, ownership, protected-file, architecture, and scope rules.
-3. Adjust `.gitignore` for the selected technology stack without hiding source artifacts unintentionally.
-4. Replace `.env.example` placeholders with the project's safe configuration names—never real credentials.
-5. Enable GitHub Discussions when the project will use formal architecture deliberation, and create an open-ended category named **Architecture** so `.github/DISCUSSION_TEMPLATE/architecture.yml` is active.
-6. Define who may approve significant architecture changes.
+## GitHub-native workflow
 
-GitHub Discussion category forms live under `.github/DISCUSSION_TEMPLATE/`; the form filename must match the category slug. This template assumes an `Architecture` category with slug `architecture`.
+Use each GitHub object for one responsibility:
 
-## Governance model
+`Discussion → Issue → Pull Request → Review / Checks → Merge`
 
-Use GitHub's native objects for their native responsibilities:
+- **Discussion** — significant technical decisions and their final decision record.
+- **Issue** — approved implementation work and acceptance criteria.
+- **Pull Request** — implementation, review, verification, and merge.
+- **README / AGENTS** — stable repository instructions.
 
-- **Discussion** — significant architecture deliberation, independent AI/human review, and the final decision summary.
-- **Issue** — approved implementation work, scope, acceptance criteria, sequencing, risks, and verification expectations.
-- **Pull Request** — actual implementation, code review, checks, and merge decision.
-- **README / AGENTS / CONTRIBUTING** — stable repository instructions only.
-
-Do not add a separate ADR, decision ledger, AI review report, or custom workflow document unless the project has a concrete need that GitHub's native objects do not cover.
-
-## Development lifecycle baseline
-
-1. **Project initialization** — establish project-specific README, agent rules, dependencies, checks, and canonical-source boundaries.
-2. **Existing project intake** — reconstruct current state from repository evidence before editing ongoing work.
-3. **Task start** — confirm branch, Issue, scope, ownership, acceptance criteria, and prohibited areas.
-4. **Architecture Discussion when needed** — for Significant Change, compare alternatives and obtain required approval in GitHub Discussions.
-5. **Implementation Issues** — split the approved direction into executable work.
-6. **Development and checkpoints** — implement focused changes on task branches.
-7. **Pull Request / review / checks** — verify the change and merge through GitHub's native PR workflow.
-8. **Handoff / continuation** — preserve durable state in the relevant Issue or PR when work is incomplete.
-
-For Significant Change, use:
-
-`Architecture Discussion → Approved Decision in Discussion → Implementation Issue(s) → Pull Request → Review / Checks → Merge / Close`
+Do not create parallel ADR, decision-ledger, AI-review-report, or custom lifecycle files unless the project has a concrete need that GitHub does not cover.
 
 ## Included baseline
 
-- `AGENTS.md`: AI-agent operating rules, project intake, ownership, handoff, and GitHub-native architecture governance.
-- `CONTRIBUTING.md`: concise contributor workflow.
-- `.github/DISCUSSION_TEMPLATE/architecture.yml`: structured Architecture Discussion form.
-- `.github/ISSUE_TEMPLATE/architecture-implementation.yml`: native Issue Form for approved architecture implementation work.
-- `.github/pull_request_template.md`: concise implementation and verification template.
-- `.gitignore`: conservative cross-language exclusions.
-- `.env.example`: safe configuration placeholders.
+- `AGENTS.md` — concise AI-agent operating rules.
+- `.github/DISCUSSION_TEMPLATE/architecture.yml` — lightweight form for significant technical decisions.
+- `.github/ISSUE_TEMPLATE/implementation.yml` — implementation tracking after a decision or for other non-trivial work.
+- `.github/pull_request_template.md` — implementation and verification template.
+- `.gitignore` — conservative cross-language exclusions.
+- `.env.example` — safe configuration placeholders.
 
-This template deliberately includes no dependency manifest, CI workflow, ADR system, or language-specific test command. Add project-specific infrastructure only after the generated project actually needs it.
+This template intentionally does **not** pre-create language-specific CI, dependency manifests, deployment environments, `CODEOWNERS`, `SECURITY.md`, release branches, package publishing, monitoring, migrations, feature flags, or monorepo governance. Add them only when the generated project actually needs them.

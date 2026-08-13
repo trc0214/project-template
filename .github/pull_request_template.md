@@ -1,29 +1,24 @@
 ## Summary
 
-What changed and why?
+What changed?
 
 ## Related Work
 
 Closes #
 
-Architecture Discussion (required for Significant Change):
-
-## Changes
-
-- 
+Discussion (when applicable):
 
 ## Verification
 
-Commands / checks run and results:
+What tests, checks, build, or manual verification were run?
 
-## Compatibility / Risk
+## Risk
 
 State `None` when there is no material compatibility, migration, security, deployment, or rollback risk.
 
 ## Checklist
 
-- [ ] The change is within the linked Issue scope
-- [ ] Applicable tests / lint / type checks / build were run
-- [ ] Significant architecture changes link an approved Architecture Discussion
+- [ ] Change stays within scope
+- [ ] Applicable checks were run
 - [ ] No secrets, debug artifacts, or unrelated files were committed
-- [ ] Stable documentation was updated only where necessary
+- [ ] Stable documentation was updated only when needed
