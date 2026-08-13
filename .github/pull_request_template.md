@@ -4,7 +4,7 @@ What changed?
 
 ## Related Work
 
-Closes #
+Closes # (only when this PR should close the Issue after merge)
 
 Discussion (when applicable):
 
@@ -14,7 +14,7 @@ What tests, checks, build, or manual verification were run?
 
 ## Risk
 
-State `None` when there is no material compatibility, migration, security, deployment, or rollback risk.
+Describe material compatibility, migration, security, deployment, or rollback risk when applicable.
 
 ## Checklist
 
