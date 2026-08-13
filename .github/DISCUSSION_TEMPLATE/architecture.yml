@@ -3,7 +3,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this Discussion for significant technical or architecture decisions before implementation. Keep the discussion focused on information that changes the decision. The final decision stays in this Discussion; do not duplicate it into a separate ADR unless the project explicitly requires one.
+        Use this Discussion for significant technical decisions before implementation. Keep only information that affects the decision. Record the final decision in this Discussion instead of duplicating it into another decision document.
 
   - type: textarea
     id: problem
@@ -14,90 +14,47 @@ body:
       required: true
 
   - type: textarea
-    id: current_architecture
+    id: proposal
     attributes:
-      label: Current Architecture
-      description: Summarize the relevant current architecture using repository evidence.
-    validations:
-      required: true
-
-  - type: textarea
-    id: decision_drivers
-    attributes:
-      label: Decision Drivers / Constraints
-      description: List the requirements, constraints, tradeoffs, or evaluation criteria that should drive the decision.
-    validations:
-      required: true
-
-  - type: textarea
-    id: proposed_architecture
-    attributes:
-      label: Proposed Architecture
+      label: Proposed Direction
       description: Describe the proposed direction without presenting it as already approved.
-    validations:
-      required: true
-
-  - type: textarea
-    id: target_structure
-    attributes:
-      label: Target File / Module Structure or Data Flow
-      description: Required when repository, package, module, service, component boundaries, or data flow will materially change. Otherwise enter N/A.
     validations:
       required: true
 
   - type: textarea
     id: alternatives
     attributes:
-      label: Alternatives Considered
-      description: Compare credible alternatives, including keeping the current design when relevant.
+      label: Alternatives
+      description: List credible alternatives, including keeping the current design when relevant.
     validations:
       required: true
 
   - type: textarea
     id: impact
     attributes:
-      label: Impact / Blast Radius
-      description: Identify the important affected modules, interfaces, data, security boundaries, dependencies, deployment, users, or operations. Keep unrelated dimensions out.
-    validations:
-      required: true
-
-  - type: textarea
-    id: conditional_considerations
-    attributes:
-      label: Migration / Rollback / Security / Performance / Verification
-      description: Document only the dimensions materially affected by this decision. Enter N/A for dimensions that do not apply.
-    validations:
-      required: true
-
-  - type: textarea
-    id: open_questions
-    attributes:
-      label: Open Questions
-      description: What should reviewers challenge, verify, or resolve? Enter N/A if none remain.
+      label: Impact / Risks
+      description: Summarize the important affected modules, interfaces, data, security, deployment, compatibility, migration, or performance concerns. Omit dimensions that do not matter.
     validations:
       required: true
 
   - type: textarea
     id: evidence
     attributes:
-      label: Related Evidence
-      description: Link relevant code, branch, commit, draft PR, benchmark, docs, incidents, or experiments.
+      label: Evidence / Open Questions
+      description: Link relevant code, benchmarks, docs, incidents, experiments, or unresolved questions.
     validations:
       required: false
 
   - type: input
-    id: required_approval
+    id: approver
     attributes:
       label: Required Approver
-      description: Identify the user or maintainer who must approve this decision before implementation.
+      description: Identify the user or maintainer who must approve this direction.
     validations:
       required: true
 
   - type: markdown
     attributes:
       value: |
-        ## AI review
-        AI reviewers should reply directly in this Discussion with: Reviewer / Model, Position (Support / Support with Changes / Oppose / Need More Evidence), material concerns, repository evidence, and recommendation. Multi-AI review is advisory, not a vote.
-
         ## Final decision
-        When the discussion converges, update the Discussion body or add a clear final decision comment containing the selected direction, important rejected alternatives, rationale, accepted risks, and approver. This Discussion is the canonical decision record.
+        When the Discussion converges, update the body or add a final comment with the selected direction, core rationale, important rejected alternatives, accepted risks, and approver. This Discussion is the canonical decision record.
