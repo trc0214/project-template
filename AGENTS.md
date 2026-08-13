@@ -6,17 +6,24 @@ This file is the repository-level baseline for AI agents. Apply instructions in 
 
 1. The user's explicit instructions for the current task.
 2. This repository's `AGENTS.md` and any more specific instructions in scope.
-3. The governing `DEVELOPMENT_GUIDELINES` from the originating workspace, when available.
+3. The governing workspace development rules, when available.
 4. Other workspace rules.
 5. Tool defaults.
 
-Project maintainers may make this file stricter or override this baseline for project needs. In particular, document project-specific test, lint, type-check, build, deployment, protected-file, architecture, ownership, and scope rules here.
+Project maintainers may make this file stricter or override this baseline for project needs. Keep project-specific test, lint, type-check, build, deployment, protected-file, architecture, ownership, and scope rules here.
 
 ## Repository governance
 
-GitHub and this Git repository are the canonical source for source code, branches, commits, issues, pull requests, and implementation state. Chat transcripts must never be the only record of project state.
+GitHub and this Git repository are the canonical source for source code, branches, commits, Discussions, Issues, pull requests, reviews, checks, and implementation state. Chat transcripts must never be the only record of project state.
 
-The default base branch is `main`. Keep `main` stable and deliverable. Humans and AI agents should not perform feature development directly on `main`; use a task branch and a pull request.
+Keep `main` stable and deliverable. Humans and AI agents should not perform feature development directly on `main`; use a task branch and a pull request.
+
+Do not create custom governance documents when GitHub already provides a native object for the same purpose. Prefer:
+
+- GitHub Discussions for significant architecture deliberation and the final decision summary.
+- GitHub Issues for approved implementation work and acceptance criteria.
+- Pull Requests for implementation review and verification.
+- `README.md`, `AGENTS.md`, and when useful `CONTRIBUTING.md` for stable repository instructions.
 
 ## Branches
 
@@ -26,46 +33,39 @@ Name AI-agent branches `ai/<agent>/<task>`, for example:
 - `ai/claude/auth-tests`
 - `ai/gemini/dashboard-ui`
 
-Use `feature/<task>`, `fix/<task>`, `docs/<task>`, `refactor/<task>`, `test/<task>`, or `chore/<task>` for general work. A branch represents a task, not an agent. Do not maintain permanent branches named only after agents, such as `chatgpt`, `claude`, or `gemini`.
+Use `feature/<task>`, `fix/<task>`, `docs/<task>`, `refactor/<task>`, `test/<task>`, or `chore/<task>` for general work. A branch represents a task, not an agent. Do not maintain permanent branches named only after agents.
 
 Before starting work, confirm the current branch, base branch, task goal, allowed and prohibited scope, acceptance criteria, and repository-specific instructions. Synchronize with a reasonably current base branch before implementation.
 
 ## Existing project intake
 
-When joining a project after implementation has already started—including taking over an existing repository, handoff, incomplete PR, or long-running maintenance task—complete a project intake before modifying code. Do not start from a chat summary, a single README, or a preferred architecture pattern alone.
+When joining a project after implementation has already started—including an existing repository, handoff, incomplete PR, or maintenance task—complete an intake before modifying code. Do not start from a chat summary, a single README, or a preferred architecture pattern alone.
 
 Before implementation, at minimum:
 
-1. Read `AGENTS.md`, `README`, `CONTRIBUTING`, relevant `docs/`, ADRs or decision records, and any repository-to-workspace mapping that exists.
-2. Confirm the default/base branch, active branches, open PRs and issues, recent relevant commits, current owner, and handoff state.
-3. Understand the current entry points, module or service boundaries, data flow, external dependencies, configuration, storage, deployment path, and important security boundaries.
-4. Inspect `git status` and the relevant diff. Run the existing tests, lint, type checks, and build when reasonably possible to establish a baseline. Record existing failures as pre-existing rather than attributing them to the new task.
-5. Identify ongoing migrations, deprecated components, technical debt, known risks, protected files or areas, and concurrent work by other agents or contributors.
+1. Read `AGENTS.md`, `README.md`, `CONTRIBUTING.md` when present, necessary `docs/`, and relevant GitHub Discussions, Issues, and Pull Requests.
+2. Confirm the default/base branch, active branches, open PRs and Issues, recent relevant commits, current owner, and handoff state.
+3. Understand relevant entry points, module or service boundaries, data flow, external dependencies, configuration, storage, deployment path, and security boundaries.
+4. Inspect `git status` and the relevant diff. Run existing tests, lint, type checks, and build when reasonably possible to establish a baseline. Record existing failures as pre-existing.
+5. Identify ongoing migrations, deprecated components, technical debt, known risks, protected files or areas, and concurrent work.
 6. Reconfirm task scope, prohibited scope, acceptance criteria, and ownership before editing implementation.
-7. If documentation and implementation disagree, treat verifiable repository state as authoritative for implementation and record the documentation drift in an issue, PR, or durable project document.
+7. If documentation and implementation disagree, treat verifiable repository state as authoritative for implementation and record documentation drift in an Issue or PR when it matters.
 
-For non-trivial work, leave a concise Current State summary in an issue, PR, handoff, or other durable context. Do not refactor merely because the current architecture differs from personal or model preference. Improvements outside the assigned scope should be proposed separately and evaluated under the architecture-change process below.
+Do not refactor merely because the current architecture differs from personal or model preference. Improvements outside scope should be proposed separately.
 
 ## Multi-agent ownership
 
-One primary owner should implement a given task at a time. Other agents may review, research, test, document, or own clearly separated subtasks. Do not independently rewrite the same implementation on another branch unless the task explicitly compares alternatives. When agents work concurrently, separate file ownership or functional boundaries wherever practical.
+One primary owner should implement a given task at a time. Other agents may review, research, test, document, or own clearly separated subtasks. Do not independently rewrite the same implementation on another branch unless the task explicitly compares alternatives.
 
 ## Pull requests
 
-Merge agent branches through pull requests. Keep every PR single-purpose. Its description must include:
-
-- Summary
-- Scope
-- Important design decisions
-- Verification
-- Known risks
-- Follow-up or handoff information
+Merge task branches through pull requests. Keep every PR single-purpose. Use the repository PR template and GitHub's native review/check surfaces.
 
 Before merge, confirm that the branch is reasonably synchronized with its base; applicable tests, lint, type checks, and builds pass; and the diff contains no secrets, debug artifacts, unexpected files, or out-of-scope changes.
 
 ## Commits and AI metadata
 
-Use Conventional Commits with `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, or `build`. Avoid messages without useful intent, such as `update`, `changes`, `test`, or `fix stuff`. Commit at meaningful, understandable state boundaries rather than after every tiny edit.
+Use Conventional Commits with `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, or `build`. Commit at meaningful state boundaries rather than after every tiny edit.
 
 AI-led commits should include these trailers when practical:
 
@@ -79,13 +79,7 @@ Verification: <tests/lint/build performed>
 
 When taking over prior AI work, optionally add `Handoff-From: <agent/model or commit SHA>`.
 
-Work states mean:
-
-- `In-Progress`: an atomic development change while the task remains incomplete.
-- `Checkpoint`: a preserved handoff state before an agent/model switch, session end, or major change of approach.
-- `Resolved`: acceptance criteria and reasonable verification are complete. GitHub issue and PR lifecycle still determines closure.
-
-Do not use `Closes #N`, `Fixes #N`, or `Resolves #N` for partial fixes, checkpoints, or unreviewed work. Use a closing keyword only when merge should truly close the issue. For multi-commit work, prefer `Closes #N` in the final PR description.
+Do not use `Closes #N`, `Fixes #N`, or `Resolves #N` for partial fixes, checkpoints, or unreviewed work. Prefer a closing keyword in the final PR when the merge should actually close the Issue.
 
 ## Handoff and agent switching
 
@@ -102,15 +96,13 @@ Known Issues / Risks
 Recommended Next Step
 ```
 
-Never hand off with only a vague instruction such as “continue” or “finish this.”
-
-Before switching agents or models: organize the working tree, remove debug and temporary artifacts, run reasonable checks, create a checkpoint commit, push the branch, and update the issue, PR, and handoff. The receiving agent must review `AGENTS.md`, the current branch, recent commits, issue or PR, handoff, `git status` and diff, and current test status. A chat summary alone is insufficient.
+Before switching agents or models: organize the working tree, remove debug and temporary artifacts, run reasonable checks, create a checkpoint commit, push the branch, and update the relevant Issue or PR. The receiving agent must review repository state rather than rely only on a natural-language handoff.
 
 ## Major technical decisions and architecture changes
 
-Routine changes may be decided by the task owner when they remain inside the approved scope and do not alter external contracts, data integrity, security models, deployment topology, or canonical-source boundaries. Examples include implementation details, local refactors, naming, internal organization, and low-risk dependency updates.
+Routine implementation details may be decided by the task owner when they stay inside approved scope and do not materially change external contracts, data integrity, security models, deployment topology, canonical-source boundaries, or core architecture.
 
-Treat the following as significant changes unless repository-specific rules say otherwise:
+Treat these as significant changes unless project-specific rules say otherwise:
 
 - major module or service-boundary changes
 - public API or contract breaking changes
@@ -123,81 +115,89 @@ Treat the following as significant changes unless repository-specific rules say 
 - removal of core capabilities
 - large cross-cutting refactors or migrations
 
-### Architecture Discussions and multi-AI review
+### Architecture Discussion
 
-GitHub Discussions are the deliberation layer for significant changes. ADRs or `DECISIONS` are the final decision record, issues track execution, and pull requests contain implementation and verification. Do not use all four as interchangeable lifecycle state.
+When GitHub Discussions are enabled, start a significant change in the open-ended `Architecture` category using the repository Discussion form.
 
-When Discussions are enabled, significant changes should begin in the open-ended `Architecture` category. The discussion author may be a human or AI agent, but an AI-authored proposal must remain explicitly `Proposed` or `Reviewing` until the required human or maintainer approval exists.
+The Discussion should contain only information that materially helps the decision. At minimum cover:
 
-An Architecture Discussion must include at least:
+- problem and context
+- current architecture
+- decision drivers / constraints
+- proposed architecture
+- credible alternatives
+- impact / blast radius
+- open questions
+- repository evidence
+- required approver
 
-- Status
-- Context
-- Problem / Motivation
-- Constraints
-- Current Architecture
-- Proposed Direction
-- Alternatives
-- Open Questions
-- Impact / Blast Radius
-- Migration Strategy
-- Rollback Strategy
-- Testing / Verification Plan
-- Related evidence, branch, commit, or draft PR
-- Decision Owner and Required Approval
+When the proposal changes repository, package, module, service, or component structure, also show the target file/module structure or relevant data flow. Migration, rollback, security, performance, and test strategy are required only when they are materially affected; otherwise state `N/A` rather than inventing detail.
 
-AI reviewers must independently inspect repository evidence rather than merely restating another model's summary. Each review should state:
+AI reviewers participate directly through Discussion comments or replies. Each review should identify the model, position (`Support`, `Support with Changes`, `Oppose`, or `Need More Evidence`), material concerns, repository evidence, and recommendation. Reviewers must independently inspect repository evidence and distinguish facts from inference or preference.
 
-```text
-Reviewer / Model
-Review Focus
-Position: Support | Support with Changes | Oppose | Need More Evidence
-Blocking Concerns
-Major Concerns
-Alternative
-Evidence
-Recommendation
-```
+Multi-AI review is advisory, not a vote. AI agents must not self-approve significant changes that require user or maintainer approval.
 
-Reviewers must distinguish verified repository facts from inference and architectural preference. Unless explicitly assigned implementation ownership, reviewers must not modify the core implementation during the deliberation phase.
+When discussion converges, update the Discussion body or add a clear final decision comment containing:
 
-Multi-AI review is not a vote. The discussion owner must synthesize agreement, disagreements, missing evidence, unresolved questions, and items requiring human or maintainer judgment. Model count or majority opinion never replaces the repository's decision authority.
+- selected direction
+- important rejected alternatives
+- rationale
+- accepted risks
+- approver
 
-Recommended lifecycle:
+The GitHub Discussion itself is the canonical decision record. Do not create a separate ADR, decision ledger, or AI review report unless this project explicitly requires one.
 
-`Proposed → Reviewing → Consensus Reached / Decision Required → Approved / Rejected → Closed`
+If Discussions are unavailable, an Issue may temporarily host the same deliberation. Do not create a parallel custom decision-document system as a fallback.
 
-After required approval, record the final decision in an ADR or decision record, create implementation issues, and implement through normal task branches and PRs. Close the Discussion only after linking the final ADR, execution issues, and implementation PR, or after recording why no decision was adopted.
+### Implementation Issues
 
-If Discussions are not enabled, an issue or PR proposal may temporarily serve as the deliberation surface, but the same structure and approval rules apply.
+After approval, create one or more implementation Issues using the native Issue Form. An implementation Issue should answer what must be done and what counts as complete; it must not reopen the architecture debate.
+
+Use the Issue for:
+
+- related Architecture Discussion
+- implementation scope and out-of-scope boundaries
+- acceptance criteria
+- implementation plan
+- dependencies / sequencing
+- risks
+- verification expectations
+
+Split large changes into smaller Issues or sub-issues when useful. Add migration or rollback work only to Issues that actually own that work.
+
+### Implementation Pull Requests
+
+A PR should describe the actual implementation and verification, not repeat the Discussion rationale or the entire Issue plan. Link the relevant Issue and, for significant changes, the approved Architecture Discussion.
+
+Use GitHub's native reviewers, review comments, Checks, Files changed view, linked Issues, labels, Projects, and milestones where useful instead of duplicating those capabilities in custom documents.
 
 Before implementing a significant change:
 
-1. Create a recoverable checkpoint that preserves the verified pre-change state.
-2. Create or update an Architecture Discussion for problem framing, alternatives, review, and unresolved questions. After discussion convergence and required approval, create or update the ADR or decision record that captures the final decision and rationale.
-3. Record the decision owner and approval status. An AI agent must not self-approve changes that materially affect external behavior, data integrity, the security model, deployment topology, canonical source, core architecture, or an irreversible/high-cost operation. Obtain explicit user or maintainer approval first.
-4. Do not hide an architecture change inside an ordinary feature or bug-fix PR. Prefer a separate PR; if separation is impractical, clearly isolate the architecture change and link the approved decision record.
-5. Prefer incremental, verifiable, reversible migrations. If rollback is impossible, document the irreversible risk and recovery plan before execution.
-6. After implementation, update relevant architecture, README, `AGENTS.md`, ADR/decision, API/schema/deployment documentation, and issue/PR state so durable context matches the actual implementation.
+1. Create a recoverable checkpoint preserving the verified pre-change state.
+2. Complete the Architecture Discussion and obtain required approval in that Discussion.
+3. Create implementation Issue(s) with clear acceptance criteria.
+4. Implement through focused task branches and PRs linked to the Issue and Discussion.
+5. Prefer incremental, verifiable, reversible migration. If rollback is impossible, record that risk in the Discussion or responsible Issue before execution.
+6. After implementation, update only the stable documentation that is actually affected, such as `README.md`, `AGENTS.md`, API/schema/deployment docs, and GitHub lifecycle state.
 
-Decision authority principle: AI agents may decide implementation details within an approved architecture and task scope. For significant direction changes, their role is to propose, compare, validate, and implement an approved option—not to assume architecture governance authority. When uncertain whether a change is significant, propose first and do not change the architecture by default.
+Decision authority principle: AI agents may decide implementation details within an approved architecture and scope. For significant direction changes, their role is to propose, compare, validate, and implement an approved option—not to assume architecture governance authority.
 
 ## Testing and dependencies
 
 Prioritize tests for core logic, data transformations, authorization, security boundaries, and regression-prone behavior. Add a regression test for an important bug when reasonably possible.
 
-Before submitting a PR, run the project's documented test, lint, type-check and build commands when available. Add the actual commands to this file after choosing the project's technology stack; do not invent commands.
+Before submitting a PR, run the project's documented test, lint, type-check, and build commands when available. Add real commands to this file after choosing the project's technology stack; do not invent them.
 
-Use the language ecosystem's standard machine-readable dependency manifest and lockfile. Do not list dependencies only in README documentation.
+Use the language ecosystem's standard machine-readable dependency manifest and lockfile.
 
 ## Secrets
 
 Never commit API keys, passwords, access tokens, private keys, service-account credentials, production secrets, or a real `.env`. `.env.example` may contain safe placeholders only.
 
-If a secret enters Git history, deleting the current file is not enough. Treat the secret as compromised, rotate it, and clean Git history where appropriate.
+If a secret enters Git history, treat it as compromised, rotate it, and clean history where appropriate.
 
 ## Documentation and generated content
 
-README documentation should cover purpose, setup, configuration, development, and—when applicable—architecture and deployment. Record important architecture decisions in an ADR or `DECISIONS` document after deliberation. Do not turn the README into a large collection of temporary TODOs.
+`README.md` should cover purpose, setup, configuration, development, and—when applicable—architecture and deployment. Keep long-lived agent instructions in `AGENTS.md`. Keep TODOs and executable work in GitHub Issues rather than adding custom tracking files.
 
-For content synchronized between GitHub and another system such as Google Drive, explicitly identify the canonical source and synchronization direction. Do not create an unmanaged, manually edited two-way copy.
+For content synchronized between GitHub and another system, explicitly identify the canonical source and synchronization direction. Do not create an unmanaged, manually edited two-way copy.
