@@ -39,6 +39,10 @@ Merge task branches through focused pull requests. Before merge, confirm that ap
 
 If GitHub Actions workflows exist, treat their required checks as the primary automated verification. Do not bypass failing checks without an explicit project-specific reason.
 
+## Releases
+
+When this repository uses a release lifecycle and its ecosystem does not require another scheme, use Semantic Versioning tags in the form `vMAJOR.MINOR.PATCH`. Use prerelease tags such as `v1.0.0-alpha.1`, `v1.0.0-beta.1`, and `v1.0.0-rc.1`. Published release tags are immutable: do not move or reuse them; publish a new version for corrections.
+
 ## Commits and handoff
 
 Prefer Conventional Commits: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, `build`.
