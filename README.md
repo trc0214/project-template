@@ -39,6 +39,16 @@ Use each GitHub object for one responsibility:
 
 Do not create parallel ADR, decision-ledger, AI-review-report, or custom lifecycle files unless the project has a concrete need that GitHub does not cover.
 
+## Research placement
+
+Repository-coupled technical research belongs with the repository:
+
+- unresolved technical investigation or option comparison → GitHub Discussion
+- durable codebase-specific knowledge that should evolve with implementation → necessary `docs/`
+- reproducible evidence → `tests/`, `benchmarks/`, `scripts/`, or other executable artifacts when practical
+
+Research that remains useful independently of this codebase—such as domain, business, user, course, competition, requirements, or reusable cross-project research—stays in the external project context (Google Drive in this workspace) and is linked from GitHub only when needed. Do not create `docs/research/` by default.
+
 ## Included baseline
 
 - `AGENTS.md` — concise AI-agent operating rules.
@@ -48,4 +58,4 @@ Do not create parallel ADR, decision-ledger, AI-review-report, or custom lifecyc
 - `.gitignore` — conservative cross-language exclusions.
 - `.env.example` — safe configuration placeholders.
 
-This template intentionally does **not** pre-create language-specific CI, dependency manifests, deployment environments, `CODEOWNERS`, `SECURITY.md`, release branches, package publishing, monitoring, migrations, feature flags, or monorepo governance. Add them only when the generated project actually needs them.
+This template intentionally does **not** pre-create language-specific CI, dependency manifests, deployment environments, `CODEOWNERS`, `SECURITY.md`, release branches, package publishing, monitoring, migrations, feature flags, monorepo governance, or a generic research-doc hierarchy. Add them only when the generated project actually needs them.
