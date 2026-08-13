@@ -42,7 +42,6 @@ body:
     attributes:
       label: Target File / Module Structure or Data Flow
       description: Required when repository, package, module, service, component boundaries, or data flow will materially change. Otherwise enter N/A.
-      render: shell
     validations:
       required: true
 
