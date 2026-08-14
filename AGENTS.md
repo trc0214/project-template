@@ -21,7 +21,7 @@ Put a rule or template at the narrowest durable layer that owns it:
 
 GitHub account-wide community defaults do not replace repository-specific instructions. A repository-local supported file overrides the account-wide default for that repository. Do not maintain two editable copies of the same universal template after account-wide inheritance has been verified.
 
-Until `trc0214/.github` exists and inheritance is verified, local Discussion/Issue/PR templates in this template are an intentional fallback and must not be removed prematurely.
+The public `trc0214/.github` repository provides the shared Discussion/Issue/PR templates and contribution guidance. Inheritance was verified in a repository without local overrides. Add a repository-local supported file only when the project needs a justified override.
 
 ## Repository workflow
 

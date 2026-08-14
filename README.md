@@ -10,7 +10,7 @@ Use the narrowest durable layer that owns the concern:
 2. **`trc0214/project-template` scaffold** — files that should actually be copied into each new repository, such as `README.md`, `AGENTS.md`, `.gitignore`, `.env.example`, `.editorconfig`, and `.gitattributes`.
 3. **Project-specific configuration** — dependency manifests and lockfiles, CI/CD, `LICENSE`, `CODEOWNERS`, dependency automation, security tooling, deployment, release configuration, and other ecosystem-specific controls only when applicable.
 
-Until the account-wide `.github` repository is created and inheritance is verified, this template keeps local Discussion/Issue/PR templates as a safe fallback. After inheritance is proven, remove duplicate universal templates from this repository instead of maintaining two editable copies.
+The public `trc0214/.github` repository now provides the shared Discussion, Issue, pull request, and contribution defaults. Their inheritance was verified in a repository without local overrides before the duplicate copies were removed from this template.
 
 ## Create a project
 
@@ -79,10 +79,7 @@ Research that remains useful independently of this codebase—such as domain, bu
 - `.gitattributes` — Git text normalization and common binary handling.
 - `.gitignore` — conservative cross-language exclusions.
 - `.env.example` — safe configuration placeholders.
-- `.github/DISCUSSION_TEMPLATE/ideas.yml` — temporary local fallback for the shared Technical Proposal form until account-wide inheritance is established.
-- `.github/ISSUE_TEMPLATE/bug.yml` — structured defect reporting.
-- `.github/ISSUE_TEMPLATE/implementation.yml` — implementation tracking after a decision or for other non-trivial work.
-- `.github/ISSUE_TEMPLATE/config.yml` — structured issue chooser baseline.
-- `.github/pull_request_template.md` — implementation and verification template.
+
+Shared Discussion, Issue, and pull request templates are intentionally not copied into generated repositories. They are inherited from `trc0214/.github` unless a repository has a justified local override.
 
 This template intentionally does **not** pre-create a root `LICENSE`, language-specific CI, dependency manifests, deployment environments, `CODEOWNERS`, `SECURITY.md`, release branches, package publishing, monitoring, migrations, feature flags, monorepo governance, a custom Architecture Discussion category, or a generic research-doc hierarchy. Add or inherit them only when the generated project actually needs them.
