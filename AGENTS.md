@@ -25,17 +25,18 @@ GitHub is the canonical source for source code, branches, commits, Discussions, 
 
 Use GitHub's native objects instead of parallel tracking documents:
 
-- **Discussion**: significant technical decisions before implementation; keep the final decision in the same Discussion.
+- **Ideas Discussion**: proposals to change or improve the project. Significant technical decisions are reviewed and finalized here before implementation.
 - **Issue**: approved or otherwise well-defined implementation scope, acceptance criteria, dependencies, and completion state.
 - **Pull Request**: actual code changes, review, checks, and merge decision.
 
-Do not create ADR, decision-ledger, AI-review-report, or custom lifecycle documents unless this project has a concrete need that GitHub does not cover.
+Use the repository's native `Ideas` category rather than creating a separate `Architecture` category solely for governance. Do not create ADR, decision-ledger, AI-review-report, or custom lifecycle documents unless this project has a concrete need that GitHub does not cover.
 
-### Architecture Discussion minimum
+### Significant technical proposal minimum
 
-For a significant technical change, the Discussion must give reviewers enough evidence to reconstruct both the current state and the proposed target. At minimum cover:
+For a significant technical change, the Ideas Discussion must give reviewers enough evidence to reconstruct both the current state and the proposed target. At minimum cover:
 
 - decision status
+- proposal type
 - problem / context
 - current architecture or current state
 - decision drivers / constraints
@@ -45,15 +46,15 @@ For a significant technical change, the Discussion must give reviewers enough ev
 - evidence and unresolved questions
 - required approver
 
-When repository, package, module, service, component boundaries, or data flow materially change, also show the target file/module structure or target data flow. Do not substitute a preferred architecture pattern for repository evidence.
+When repository, package, module, service, component boundaries, or data flow materially change, also show the target file/module structure or target data flow. These details are optional for small feature ideas where they do not affect the decision. Do not substitute a preferred architecture pattern for repository evidence.
 
-Significant changes include public API breaking changes, core architecture or runtime migrations, destructive schema migrations, authentication / authorization model changes, deployment-topology changes, and large cross-cutting refactors. Do not implement these without the required maintainer or user approval.
+Significant changes include public API breaking changes, core architecture or runtime migrations, destructive schema migrations, authentication / authorization model changes, deployment-topology changes, and large cross-cutting refactors. Do not implement these without the required maintainer or user approval recorded in the Ideas Discussion.
 
 ## AI attribution and provenance
 
 When multiple humans or AI tools operate through the same GitHub account, GitHub's author identity records the operator account, not necessarily the actual contributor. Record AI identity only where native GitHub authorship cannot distinguish a material contributor; do not create a separate provenance log.
 
-- **Architecture Discussion initial draft**: fill `Drafted By` with the human or AI agent/model that produced the initial proposal.
+- **Ideas Discussion initial draft**: fill `Drafted By` with the human or AI agent/model that produced the initial proposal.
 - **Discussion revision or synthesis**: if another AI materially rewrites the proposal or synthesizes multiple reviews, leave a concise comment beginning with `AI-Contributor: <agent/model>` and `Role: Revision` or `Role: Synthesis`. State what materially changed. Do not overwrite the original `Drafted By` merely to replace provenance.
 - **Discussion review**: an AI review comment must begin with `AI-Reviewer: <agent/model>`. Add `Review-Focus: <area>` only when the review has a specialized scope.
 - **Issue planning**: when a different AI materially changes execution scope or acceptance criteria through a shared GitHub account, leave one concise `AI-Contributor: <agent/model>` comment with `Role: Planning` or `Role: Revision`. Routine wording edits do not require attribution comments.
@@ -67,7 +68,7 @@ Do not infer the AI model from the GitHub username, commit author, writing style
 
 ## Research and documentation placement
 
-- Use GitHub Discussion for repository-specific technical investigation or option comparison while the technical direction is still unresolved.
+- Use GitHub Discussion for repository-specific technical investigation or option comparison while the technical direction is still unresolved; use the native Ideas category when the discussion is proposing a project change.
 - Keep durable knowledge that is tightly coupled to this codebase in `docs/` only when future maintainers need it and it should evolve with the implementation.
 - Prefer reproducible evidence in `tests/`, `benchmarks/`, `scripts/`, or other executable artifacts over a static research report when practical.
 - Keep domain, business, user, course, competition, requirements, and other research that remains useful independently of this repository in the external project context (Google Drive in this workspace); link the source instead of copying it into the repository.
@@ -78,7 +79,7 @@ Do not create a generic `docs/research/` directory merely because research occur
 
 Merge task branches through focused pull requests. Before merge, confirm that applicable tests, lint, type checks, builds, and other required checks pass, and that the diff contains no secrets, debug artifacts, unexpected files, or out-of-scope changes.
 
-A PR implementing a significant technical decision must link the approved Architecture Discussion. Do not hide an unapproved architecture change inside an ordinary feature or bug-fix PR.
+A PR implementing a significant technical decision must link the approved Ideas Discussion. Do not hide an unapproved architecture or other major direction change inside an ordinary feature or bug-fix PR.
 
 If GitHub Actions workflows exist, treat their required checks as the primary automated verification. Do not bypass failing checks without an explicit project-specific reason.
 

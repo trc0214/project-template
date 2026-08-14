@@ -6,7 +6,7 @@ What changed?
 
 Closes # (only when this PR should close the Issue after merge)
 
-Architecture Discussion (required for significant technical change):
+Ideas Discussion (required for significant technical change):
 
 ## Verification
 
@@ -20,6 +20,6 @@ Describe material compatibility, migration, security, deployment, or rollback ri
 
 - [ ] Change stays within scope
 - [ ] Applicable checks were run
-- [ ] Significant technical changes link an approved Architecture Discussion
+- [ ] Significant technical changes link an approved Ideas Discussion
 - [ ] No secrets, debug artifacts, or unrelated files were committed
 - [ ] Stable documentation was updated only when needed
