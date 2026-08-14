@@ -24,7 +24,7 @@ Template files encode repository content, not every GitHub repository setting. A
 3. Adjust `.gitignore` and `.env.example` for the selected stack.
 4. Add the ecosystem-standard dependency manifest and lockfile when applicable.
 5. For a public or reusable repository, explicitly choose and add a `LICENSE`.
-6. If the project uses formal architecture decisions, enable GitHub Discussions and create an open-ended category named **Architecture** so `.github/DISCUSSION_TEMPLATE/architecture.yml` is active.
+6. If the project uses formal architecture decisions, enable GitHub Discussions and create an open-ended category named **Architecture** with slug `architecture`, matching `.github/DISCUSSION_TEMPLATE/architecture.yml`.
 7. Enable automatic deletion of merged head branches when the repository follows the short-lived task-branch policy.
 8. Use branch protection / rulesets when enforcement is needed; for a protected `main`, require pull requests and add required status checks when real CI checks exist.
 9. Add project-specific GitHub Actions only when the repository has real repeatable work such as test, lint, type check, build, code generation, or deployment. Do not add empty CI.
