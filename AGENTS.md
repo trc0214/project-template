@@ -31,6 +31,20 @@ Use GitHub's native objects instead of parallel tracking documents:
 
 Do not create ADR, decision-ledger, AI-review-report, or custom lifecycle documents unless this project has a concrete need that GitHub does not cover.
 
+## AI attribution and provenance
+
+When multiple humans or AI tools operate through the same GitHub account, GitHub's author identity records the operator account, not necessarily the actual contributor. Record AI identity only where native GitHub authorship cannot distinguish the contributor; do not create a separate provenance log.
+
+- **Architecture Discussion draft**: fill `Drafted By` with the human or AI agent/model that drafted or synthesized the proposal.
+- **Discussion review**: an AI review comment must begin with `AI-Reviewer: <agent/model>`. Add `Review-Focus: <area>` only when the review has a specialized scope.
+- **Pull Request review**: when an AI submits a PR review or review comment through a shared GitHub account, begin the review body with `AI-Reviewer: <agent/model>`.
+- **Decision authority**: `Approved By` or equivalent approval text must identify the actual user or maintainer with decision authority. AI drafting, synthesis, review, or implementation never implies approval authority.
+- **Implementation branch**: `ai/<agent>/<task>` identifies the agent that created or initially owned the branch. Do not rename a branch solely to rewrite provenance after a handoff.
+- **AI handoff**: if the primary implementation agent changes while the same task continues, add one concise handoff update to the linked Issue or PR identifying `<from> → <to>` together with the remaining work and verification state. Create a new branch only when the task boundary or implementation ownership genuinely splits.
+- **Issue / PR body**: do not duplicate `Implemented By` or other AI identity fields when branch history and the linked handoff already make implementation ownership clear.
+
+Do not infer the AI model from the GitHub username, commit author, writing style, or branch history when an explicit attribution is available.
+
 ## Research and documentation placement
 
 - Use GitHub Discussion for repository-specific technical investigation or option comparison while the technical direction is still unresolved.

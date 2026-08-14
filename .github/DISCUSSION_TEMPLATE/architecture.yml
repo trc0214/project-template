@@ -5,6 +5,15 @@ body:
       value: |
         Use this Discussion for significant technical decisions before implementation. Keep only information that affects the decision. Record the final decision in this Discussion instead of duplicating it into another decision document.
 
+  - type: input
+    id: drafted_by
+    attributes:
+      label: Drafted By
+      description: Identify the human or AI agent/model that drafted or synthesized this proposal. GitHub account identity alone is not sufficient when multiple AI tools operate through the same account.
+      placeholder: Human | Codex | ChatGPT | Claude | Gemini | Other
+    validations:
+      required: true
+
   - type: textarea
     id: problem
     attributes:
@@ -56,5 +65,8 @@ body:
   - type: markdown
     attributes:
       value: |
+        ## AI review attribution
+        When an AI reviews this Discussion through a shared GitHub account, start the review comment with `AI-Reviewer: <agent/model>`. Add `Review-Focus: <area>` only when the review has a specialized scope. GitHub account identity records the operator; this attribution records the actual AI contributor.
+
         ## Final decision
-        When the Discussion converges, update the body or add a final comment with the selected direction, core rationale, important rejected alternatives, accepted risks, and approver. This Discussion is the canonical decision record.
+        When the Discussion converges, update the body or add a final comment with the selected direction, core rationale, important rejected alternatives, accepted risks, and approver. The approver must be the actual user or maintainer with decision authority; an AI draft or review is not an approval. This Discussion is the canonical decision record.
