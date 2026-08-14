@@ -17,27 +17,31 @@ Choose the appropriate visibility for the project.
 
 ## Customize after creation
 
+Template files encode repository content, not every GitHub repository setting. After creating a repository, configure the native settings that the project actually relies on.
+
 1. Replace this README with project-specific Purpose, Setup, Configuration, and—when applicable—Architecture, Development / Testing, and Deployment.
 2. Update `AGENTS.md` with real project commands, protected areas, ownership, generated-code rules, and other project-specific constraints.
 3. Adjust `.gitignore` and `.env.example` for the selected stack.
 4. Add the ecosystem-standard dependency manifest and lockfile when applicable.
 5. For a public or reusable repository, explicitly choose and add a `LICENSE`.
-6. Add project-specific GitHub Actions only when the repository has real repeatable work such as test, lint, type check, build, code generation, or deployment. Do not add empty CI.
-7. Use branch protection / rulesets when enforcement is needed.
-8. If the project has meaningful release versions, use Git tags and GitHub Releases. Unless the ecosystem requires another scheme, use `vMAJOR.MINOR.PATCH` tags and Semantic Versioning; do not move or reuse published release tags. Add `CHANGELOG.md` only when a file-based changelog is actually useful.
+6. If the project uses formal architecture decisions, enable GitHub Discussions and create an open-ended category named **Architecture** with slug `architecture`, matching `.github/DISCUSSION_TEMPLATE/architecture.yml`.
+7. Enable automatic deletion of merged head branches when the repository follows the short-lived task-branch policy.
+8. Use branch protection / rulesets when enforcement is needed; for a protected `main`, require pull requests and add required status checks when real CI checks exist.
+9. Add project-specific GitHub Actions only when the repository has real repeatable work such as test, lint, type check, build, code generation, or deployment. Do not add empty CI.
+10. If the project has meaningful release versions, use Git tags and GitHub Releases. Unless the ecosystem requires another scheme, use `vMAJOR.MINOR.PATCH` tags and Semantic Versioning; do not move or reuse published release tags. Add `CHANGELOG.md` only when a file-based changelog is actually useful.
 
 ## GitHub-native workflow
 
-Use each GitHub object for one responsibility:
+Ordinary implementation work can begin with an Issue. Significant technical changes begin with an Architecture Discussion before implementation:
 
-`Discussion → Issue → Pull Request → Review / Checks → Merge`
+`Architecture Discussion → Approved decision → Issue → Pull Request → Review / Checks → Merge`
 
 - **Discussion** — significant technical decisions and their final decision record.
-- **Issue** — approved implementation work and acceptance criteria.
+- **Issue** — approved or otherwise well-defined implementation work and acceptance criteria.
 - **Pull Request** — implementation, review, verification, and merge.
 - **README / AGENTS** — stable repository instructions.
 
-Do not create parallel ADR, decision-ledger, AI-review-report, or custom lifecycle files unless the project has a concrete need that GitHub does not cover.
+Do not create parallel ADR, decision-ledger, AI-review-report, provenance-log, or custom lifecycle files unless the project has a concrete need that GitHub does not cover.
 
 ## Research placement
 
@@ -51,8 +55,8 @@ Research that remains useful independently of this codebase—such as domain, bu
 
 ## Included baseline
 
-- `AGENTS.md` — concise AI-agent operating rules.
-- `.github/DISCUSSION_TEMPLATE/architecture.yml` — lightweight form for significant technical decisions.
+- `AGENTS.md` — concise AI-agent operating rules, including multi-AI attribution and handoff.
+- `.github/DISCUSSION_TEMPLATE/architecture.yml` — structured form for significant technical decisions.
 - `.github/ISSUE_TEMPLATE/implementation.yml` — implementation tracking after a decision or for other non-trivial work.
 - `.github/pull_request_template.md` — implementation and verification template.
 - `.gitignore` — conservative cross-language exclusions.
