@@ -26,24 +26,44 @@ GitHub is the canonical source for source code, branches, commits, Discussions, 
 Use GitHub's native objects instead of parallel tracking documents:
 
 - **Discussion**: significant technical decisions before implementation; keep the final decision in the same Discussion.
-- **Issue**: approved implementation scope, acceptance criteria, dependencies, and completion state.
+- **Issue**: approved or otherwise well-defined implementation scope, acceptance criteria, dependencies, and completion state.
 - **Pull Request**: actual code changes, review, checks, and merge decision.
 
 Do not create ADR, decision-ledger, AI-review-report, or custom lifecycle documents unless this project has a concrete need that GitHub does not cover.
 
+### Architecture Discussion minimum
+
+For a significant technical change, the Discussion must give reviewers enough evidence to reconstruct both the current state and the proposed target. At minimum cover:
+
+- decision status
+- problem / context
+- current architecture or current state
+- decision drivers / constraints
+- proposed direction
+- credible alternatives
+- material impact / risks
+- evidence and unresolved questions
+- required approver
+
+When repository, package, module, service, component boundaries, or data flow materially change, also show the target file/module structure or target data flow. Do not substitute a preferred architecture pattern for repository evidence.
+
+Significant changes include public API breaking changes, core architecture or runtime migrations, destructive schema migrations, authentication / authorization model changes, deployment-topology changes, and large cross-cutting refactors. Do not implement these without the required maintainer or user approval.
+
 ## AI attribution and provenance
 
-When multiple humans or AI tools operate through the same GitHub account, GitHub's author identity records the operator account, not necessarily the actual contributor. Record AI identity only where native GitHub authorship cannot distinguish the contributor; do not create a separate provenance log.
+When multiple humans or AI tools operate through the same GitHub account, GitHub's author identity records the operator account, not necessarily the actual contributor. Record AI identity only where native GitHub authorship cannot distinguish a material contributor; do not create a separate provenance log.
 
-- **Architecture Discussion draft**: fill `Drafted By` with the human or AI agent/model that drafted or synthesized the proposal.
+- **Architecture Discussion initial draft**: fill `Drafted By` with the human or AI agent/model that produced the initial proposal.
+- **Discussion revision or synthesis**: if another AI materially rewrites the proposal or synthesizes multiple reviews, leave a concise comment beginning with `AI-Contributor: <agent/model>` and `Role: Revision` or `Role: Synthesis`. State what materially changed. Do not overwrite the original `Drafted By` merely to replace provenance.
 - **Discussion review**: an AI review comment must begin with `AI-Reviewer: <agent/model>`. Add `Review-Focus: <area>` only when the review has a specialized scope.
+- **Issue planning**: when a different AI materially changes execution scope or acceptance criteria through a shared GitHub account, leave one concise `AI-Contributor: <agent/model>` comment with `Role: Planning` or `Role: Revision`. Routine wording edits do not require attribution comments.
 - **Pull Request review**: when an AI submits a PR review or review comment through a shared GitHub account, begin the review body with `AI-Reviewer: <agent/model>`.
 - **Decision authority**: `Approved By` or equivalent approval text must identify the actual user or maintainer with decision authority. AI drafting, synthesis, review, or implementation never implies approval authority.
 - **Implementation branch**: `ai/<agent>/<task>` identifies the agent that created or initially owned the branch. Do not rename a branch solely to rewrite provenance after a handoff.
-- **AI handoff**: if the primary implementation agent changes while the same task continues, add one concise handoff update to the linked Issue or PR identifying `<from> → <to>` together with the remaining work and verification state. Create a new branch only when the task boundary or implementation ownership genuinely splits.
+- **AI handoff**: if the primary implementation agent changes while the same task continues, add one concise handoff update to the linked Issue or PR identifying `<from> → <to>` together with remaining work and verification state. Create a new branch only when the task boundary or implementation ownership genuinely splits.
 - **Issue / PR body**: do not duplicate `Implemented By` or other AI identity fields when branch history and the linked handoff already make implementation ownership clear.
 
-Do not infer the AI model from the GitHub username, commit author, writing style, or branch history when an explicit attribution is available.
+Do not infer the AI model from the GitHub username, commit author, writing style, or branch history when explicit attribution exists.
 
 ## Research and documentation placement
 
@@ -54,11 +74,11 @@ Do not infer the AI model from the GitHub username, commit author, writing style
 
 Do not create a generic `docs/research/` directory merely because research occurred.
 
-Significant changes include public API breaking changes, core architecture or runtime migrations, destructive schema migrations, authentication / authorization model changes, deployment-topology changes, and large cross-cutting refactors. Do not implement these without the required maintainer or user approval.
-
 ## Pull requests and checks
 
 Merge task branches through focused pull requests. Before merge, confirm that applicable tests, lint, type checks, builds, and other required checks pass, and that the diff contains no secrets, debug artifacts, unexpected files, or out-of-scope changes.
+
+A PR implementing a significant technical decision must link the approved Architecture Discussion. Do not hide an unapproved architecture change inside an ordinary feature or bug-fix PR.
 
 If GitHub Actions workflows exist, treat their required checks as the primary automated verification. Do not bypass failing checks without an explicit project-specific reason.
 
