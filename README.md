@@ -23,7 +23,7 @@ Template files encode repository content, not every GitHub repository setting. A
 2. Update `AGENTS.md` with real project commands, protected areas, ownership, generated-code rules, and other project-specific constraints.
 3. Adjust `.gitignore` and `.env.example` for the selected stack.
 4. Add the ecosystem-standard dependency manifest and lockfile when applicable.
-5. For a public or reusable repository, explicitly choose and add a `LICENSE`.
+5. Explicitly choose the generated repository's license when it is public or intended for reuse. This generic template does not pre-create a root `LICENSE`, because template files are copied into generated repositories and a template-wide license would silently become part of every new project's starting state.
 6. If the project uses formal architecture decisions, enable GitHub Discussions and create an open-ended category named **Architecture** with slug `architecture`, matching `.github/DISCUSSION_TEMPLATE/architecture.yml`.
 7. Enable automatic deletion of merged head branches when the repository follows the short-lived task-branch policy.
 8. Use branch protection / rulesets when enforcement is needed; for a protected `main`, require pull requests and add required status checks when real CI checks exist.
@@ -62,4 +62,4 @@ Research that remains useful independently of this codebase—such as domain, bu
 - `.gitignore` — conservative cross-language exclusions.
 - `.env.example` — safe configuration placeholders.
 
-This template intentionally does **not** pre-create language-specific CI, dependency manifests, deployment environments, `CODEOWNERS`, `SECURITY.md`, release branches, package publishing, monitoring, migrations, feature flags, monorepo governance, or a generic research-doc hierarchy. Add them only when the generated project actually needs them.
+This template intentionally does **not** pre-create a root `LICENSE`, language-specific CI, dependency manifests, deployment environments, `CODEOWNERS`, `SECURITY.md`, release branches, package publishing, monitoring, migrations, feature flags, monorepo governance, or a generic research-doc hierarchy. Add them only when the generated project actually needs them.
