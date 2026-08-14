@@ -11,6 +11,18 @@ Apply instructions in this order:
 
 Keep project-specific commands, protected areas, ownership, architecture constraints, and deployment rules here. Do not copy general GitHub documentation into this file.
 
+## Governance layers
+
+Put a rule or template at the narrowest durable layer that owns it:
+
+- **Account-wide `trc0214/.github` defaults**: generic Discussion category forms, Issue/PR templates, and supported community-health files that should apply across repositories unless locally overridden.
+- **Repository scaffold**: files that must exist in each generated repository and evolve with it, including `README.md`, `AGENTS.md`, `.gitignore`, `.env.example`, `.editorconfig`, and `.gitattributes`.
+- **Project-specific configuration**: dependency manifests/lockfiles, CI/CD, `LICENSE`, `CODEOWNERS`, dependency automation, security tooling, deployment, release configuration, and ecosystem-specific rules when applicable.
+
+GitHub account-wide community defaults do not replace repository-specific instructions. A repository-local supported file overrides the account-wide default for that repository. Do not maintain two editable copies of the same universal template after account-wide inheritance has been verified.
+
+Until `trc0214/.github` exists and inheritance is verified, local Discussion/Issue/PR templates in this template are an intentional fallback and must not be removed prematurely.
+
 ## Repository workflow
 
 GitHub is the canonical source for source code, branches, commits, Discussions, Issues, pull requests, checks, Releases, repository-coupled technical research/documentation, and implementation state. Chat history must not be the only project record.
@@ -18,7 +30,7 @@ GitHub is the canonical source for source code, branches, commits, Discussions, 
 - Keep `main` stable and do not perform feature development directly on it.
 - Use one short-lived branch per task. AI branches use `ai/<agent>/<task>`; general work may use `feature/`, `fix/`, `docs/`, `refactor/`, `test/`, or `chore/`.
 - One implementation task should have one primary owner at a time. Other agents may review, research, test, document, or own clearly separated subtasks.
-- Before editing, read `README.md`, relevant repository instructions, and the related Discussion / Issue / PR. Check the current branch, `git status`, scope, and available test or build commands.
+- Before editing, read `README.md`, relevant repository instructions, and the related Discussion / Issue / PR. Check the current branch, scope, existing changes, and available test or build commands.
 - Keep changes focused. Do not perform unrelated refactors because a different architecture is preferred.
 
 ## GitHub-native responsibilities
@@ -26,7 +38,8 @@ GitHub is the canonical source for source code, branches, commits, Discussions, 
 Use GitHub's native objects instead of parallel tracking documents:
 
 - **Ideas Discussion**: proposals to change or improve the project. Significant technical decisions are reviewed and finalized here before implementation.
-- **Issue**: approved or otherwise well-defined implementation scope, acceptance criteria, dependencies, and completion state.
+- **Bug Issue**: reproducible incorrect behavior or regression with evidence and impact.
+- **Implementation Issue**: approved or otherwise well-defined implementation scope, acceptance criteria, dependencies, and completion state.
 - **Pull Request**: actual code changes, review, checks, and merge decision.
 
 Use the repository's native `Ideas` category rather than creating a separate `Architecture` category solely for governance. Do not create ADR, decision-ledger, AI-review-report, or custom lifecycle documents unless this project has a concrete need that GitHub does not cover.
@@ -71,7 +84,7 @@ Do not infer the AI model from the GitHub username, commit author, writing style
 - Use GitHub Discussion for repository-specific technical investigation or option comparison while the technical direction is still unresolved; use the native Ideas category when the discussion is proposing a project change.
 - Keep durable knowledge that is tightly coupled to this codebase in `docs/` only when future maintainers need it and it should evolve with the implementation.
 - Prefer reproducible evidence in `tests/`, `benchmarks/`, `scripts/`, or other executable artifacts over a static research report when practical.
-- Keep domain, business, user, course, competition, requirements, and other research that remains useful independently of this repository in the external project context (Google Drive in this workspace); link the source instead of copying it into the repository.
+- Keep domain, business, user, course, competition, requirements, and other research that remains useful independently of this repository in the external project context; link the source instead of copying it into the repository.
 
 Do not create a generic `docs/research/` directory merely because research occurred.
 
@@ -83,13 +96,24 @@ A PR implementing a significant technical decision must link the approved Ideas 
 
 If GitHub Actions workflows exist, treat their required checks as the primary automated verification. Do not bypass failing checks without an explicit project-specific reason.
 
+## Cross-project engineering baseline
+
+Use established specifications and native controls instead of inventing local equivalents:
+
+- Keep `.editorconfig` technology-neutral unless the selected language requires explicit indentation or formatting overrides.
+- Keep `.gitattributes` responsible for repository text normalization and explicit binary handling; extend it only for real file types or custom diff/merge behavior.
+- Prefer Conventional Commits for commit messages. Use `feat` for features, `fix` for fixes, and other descriptive types such as `docs`, `refactor`, `test`, `chore`, `ci`, and `build` where useful. Breaking changes must be explicit.
+- Use Semantic Versioning only when the repository has a meaningful versioned public interface and no higher-priority ecosystem versioning rule.
+- Use ecosystem-standard dependency manifests and lockfiles when applicable.
+- Add dependency automation, CI tests, security policy, SAST, workflow token restrictions, release signing, or similar supply-chain controls when project exposure and lifecycle justify them. Do not create empty generic workflows or placeholder security machinery merely to satisfy a checklist.
+
 ## Releases
 
 When this repository uses a release lifecycle and its ecosystem does not require another scheme, use Semantic Versioning tags in the form `vMAJOR.MINOR.PATCH`. Use prerelease tags such as `v1.0.0-alpha.1`, `v1.0.0-beta.1`, and `v1.0.0-rc.1`. Published release tags are immutable: do not move or reuse them; publish a new version for corrections.
 
 ## Commits and handoff
 
-Prefer Conventional Commits: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, `build`.
+Prefer Conventional Commits and keep each commit understandable on its own.
 
 Commits record repository history; Issues and PRs record lifecycle state. Do not invent custom commit-state metadata.
 
