@@ -46,6 +46,8 @@ Ordinary implementation work begins with an Issue. Reproducible defects use a Bu
 
 `Ideas Discussion → Approved decision → Issue → Pull Request → Review / Checks → Merge`
 
+All standard Issue Forms require `Drafted By` for the actual human or AI agent/model that produced the initial Issue content. Preserve that value as immutable provenance; later AI revisions use `AI-Contributor: <agent/model>` comments instead of overwriting the original attribution.
+
 - **Ideas Discussion** — feature, architecture, refactor, migration, security, performance, or other project-change proposals; significant decisions and their final decision record remain in the same Discussion.
 - **Bug Issue** — reproducible incorrect behavior or regression with evidence and impact.
 - **Implementation Issue** — approved or otherwise well-defined work, scope, acceptance criteria, dependencies, and verification.
