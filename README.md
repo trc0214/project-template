@@ -24,7 +24,7 @@ Template files encode repository content, not every GitHub repository setting. A
 3. Adjust `.gitignore` and `.env.example` for the selected stack.
 4. Add the ecosystem-standard dependency manifest and lockfile when applicable.
 5. Explicitly choose the generated repository's license when it is public or intended for reuse. This generic template does not pre-create a root `LICENSE`, because template files are copied into generated repositories and a template-wide license would silently become part of every new project's starting state.
-6. If the project uses formal architecture decisions, enable GitHub Discussions and create an open-ended category named **Architecture** with slug `architecture`, matching `.github/DISCUSSION_TEMPLATE/architecture.yml`.
+6. Enable GitHub Discussions when the project uses proposal or decision discussions. Use GitHub's native **Ideas** category for project-change proposals; `.github/DISCUSSION_TEMPLATE/ideas.yml` is the structured Technical Proposal form for that category. Do not create a separate `Architecture` category solely for governance.
 7. Enable automatic deletion of merged head branches when the repository follows the short-lived task-branch policy.
 8. Use branch protection / rulesets when enforcement is needed; for a protected `main`, require pull requests and add required status checks when real CI checks exist.
 9. Add project-specific GitHub Actions only when the repository has real repeatable work such as test, lint, type check, build, code generation, or deployment. Do not add empty CI.
@@ -32,22 +32,22 @@ Template files encode repository content, not every GitHub repository setting. A
 
 ## GitHub-native workflow
 
-Ordinary implementation work can begin with an Issue. Significant technical changes begin with an Architecture Discussion before implementation:
+Ordinary implementation work can begin with an Issue. Proposals to change or improve the project belong in the native **Ideas** Discussion category. Significant technical changes require an approved Ideas Discussion before implementation:
 
-`Architecture Discussion → Approved decision → Issue → Pull Request → Review / Checks → Merge`
+`Ideas Discussion → Approved decision → Issue → Pull Request → Review / Checks → Merge`
 
-- **Discussion** — significant technical decisions and their final decision record.
+- **Ideas Discussion** — feature, architecture, refactor, migration, security, performance, or other project-change proposals; significant decisions and their final decision record remain in the same Discussion.
 - **Issue** — approved or otherwise well-defined implementation work and acceptance criteria.
 - **Pull Request** — implementation, review, verification, and merge.
 - **README / AGENTS** — stable repository instructions.
 
-Do not create parallel ADR, decision-ledger, AI-review-report, provenance-log, or custom lifecycle files unless the project has a concrete need that GitHub does not cover.
+Do not create parallel ADR, decision-ledger, AI-review-report, provenance-log, custom Architecture category, or custom lifecycle files unless the project has a concrete need that GitHub does not cover.
 
 ## Research placement
 
 Repository-coupled technical research belongs with the repository:
 
-- unresolved technical investigation or option comparison → GitHub Discussion
+- unresolved technical investigation or option comparison → GitHub Discussion; use Ideas when it is a proposal to change the project
 - durable codebase-specific knowledge that should evolve with implementation → necessary `docs/`
 - reproducible evidence → `tests/`, `benchmarks/`, `scripts/`, or other executable artifacts when practical
 
@@ -56,10 +56,10 @@ Research that remains useful independently of this codebase—such as domain, bu
 ## Included baseline
 
 - `AGENTS.md` — concise AI-agent operating rules, including multi-AI attribution and handoff.
-- `.github/DISCUSSION_TEMPLATE/architecture.yml` — structured form for significant technical decisions.
+- `.github/DISCUSSION_TEMPLATE/ideas.yml` — Technical Proposal form attached to GitHub's native Ideas category.
 - `.github/ISSUE_TEMPLATE/implementation.yml` — implementation tracking after a decision or for other non-trivial work.
 - `.github/pull_request_template.md` — implementation and verification template.
 - `.gitignore` — conservative cross-language exclusions.
 - `.env.example` — safe configuration placeholders.
 
-This template intentionally does **not** pre-create a root `LICENSE`, language-specific CI, dependency manifests, deployment environments, `CODEOWNERS`, `SECURITY.md`, release branches, package publishing, monitoring, migrations, feature flags, monorepo governance, or a generic research-doc hierarchy. Add them only when the generated project actually needs them.
+This template intentionally does **not** pre-create a root `LICENSE`, language-specific CI, dependency manifests, deployment environments, `CODEOWNERS`, `SECURITY.md`, release branches, package publishing, monitoring, migrations, feature flags, monorepo governance, a custom Architecture Discussion category, or a generic research-doc hierarchy. Add them only when the generated project actually needs them.
