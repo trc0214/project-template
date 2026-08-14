@@ -20,6 +20,14 @@ body:
       required: true
 
   - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of Scope
+      description: List related work that is intentionally excluded when scope boundaries matter. Leave blank when the boundary is already obvious.
+    validations:
+      required: false
+
+  - type: textarea
     id: acceptance_criteria
     attributes:
       label: Acceptance Criteria
