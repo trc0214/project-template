@@ -1,0 +1,22 @@
+# Let Git detect text files and normalize repository line endings.
+* text=auto
+
+# Scripts with platform-sensitive line endings.
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Common binary formats: no EOL conversion and no textual diff.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.7z binary
+*.tar binary
