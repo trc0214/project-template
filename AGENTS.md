@@ -40,7 +40,7 @@ Use GitHub's native objects instead of parallel tracking documents:
 - **Ideas Discussion**: proposals to change or improve the project. Significant technical decisions are reviewed and finalized here before implementation.
 - **Bug Issue**: reproducible incorrect behavior or regression with evidence and impact.
 - **Implementation Issue**: approved or otherwise well-defined implementation scope, acceptance criteria, dependencies, and completion state.
-- **Pull Request**: actual code changes, review, checks, and merge decision.
+- **Pull Request**: actual code changes, review, checks, implementation provenance, and merge decision.
 
 Use the repository's native `Ideas` category rather than creating a separate `Architecture` category solely for governance. Do not create ADR, decision-ledger, AI-review-report, or custom lifecycle documents unless this project has a concrete need that GitHub does not cover.
 
@@ -65,19 +65,22 @@ Significant changes include public API breaking changes, core architecture or ru
 
 ## AI attribution and provenance
 
-When multiple humans or AI tools operate through the same GitHub account, GitHub's author identity records the operator account, not necessarily the actual contributor. Record AI identity only where native GitHub authorship cannot distinguish a material contributor; do not create a separate provenance log.
+When multiple humans or AI tools operate through the same GitHub account, GitHub's author identity records the operator account, not necessarily the actual contributor. Material AI participation must therefore be recorded in the nearest Git/GitHub native development object; do not create a separate provenance log.
 
-- **Ideas Discussion initial draft**: fill `Drafted By` with the human or AI agent/model that produced the initial proposal.
-- **Issue initial draft**: fill the account-wide Issue Form's `Drafted By` with the human or AI agent/model that produced the initial Issue content. Treat this as immutable provenance; do not overwrite it during handoff, revision, or implementation.
-- **Non-Form Issue creation**: if Blank issue, GitHub CLI, API, or automation creates an Issue without the standard Issue Form, put `Drafted By: <human-or-agent/model>` at the top of the Issue body before creation. Never create an Issue without initial attribution.
-- **Discussion revision or synthesis**: if another AI materially rewrites the proposal or synthesizes multiple reviews, leave a concise comment beginning with `AI-Contributor: <agent/model>` and `Role: Revision` or `Role: Synthesis`. State what materially changed. Do not overwrite the original `Drafted By` merely to replace provenance.
-- **Discussion review**: an AI review comment must begin with `AI-Reviewer: <agent/model>`. Add `Review-Focus: <area>` only when the review has a specialized scope.
-- **Issue planning**: when a different AI materially changes scope, acceptance criteria, reproduction, impact, dependencies, or other Issue-defining content through a shared GitHub account, leave one concise `AI-Contributor: <agent/model>` comment with `Role: Planning`, `Role: Revision`, or `Role: Synthesis`. Routine wording edits do not require attribution comments.
-- **Pull Request review**: when an AI submits a PR review or review comment through a shared GitHub account, begin the review body with `AI-Reviewer: <agent/model>`.
-- **Decision authority**: `Approved By` or equivalent approval text must identify the actual user or maintainer with decision authority. AI drafting, synthesis, review, or implementation never implies approval authority.
-- **Implementation branch**: `ai/<agent>/<task>` identifies the agent that created or initially owned the branch. Do not rename a branch solely to rewrite provenance after a handoff.
-- **AI handoff**: if the primary implementation agent changes while the same task continues, add one concise handoff update to the linked Issue or PR identifying `<from> → <to>` together with remaining work and verification state. Create a new branch only when the task boundary or implementation ownership genuinely splits.
-- **Issue / PR body**: do not duplicate `Implemented By` or other AI identity fields when branch history and the linked handoff already make implementation ownership clear.
+Use this fixed mapping:
+
+- **Ideas Discussion / Issue initial draft**: `Drafted By: <human-or-agent/model>`.
+- **Later AI planning, revision, or synthesis**: `AI-Contributor: <agent/model>` plus `Role: Planning`, `Role: Revision`, or `Role: Synthesis` in a concise comment.
+- **Pull Request implementation**: `Implemented By: <human-or-agent/model>` in the PR body. If multiple agents materially changed implementation, tests, refactors, configuration, or generated code, list each agent/model with a concise role.
+- **AI review**: begin the review body with `AI-Reviewer: <agent/model>`; add `Review-Focus: <area>` only when the review has a specialized scope.
+- **Substantive AI commit without a PR**: add `AI-Agent: <agent/model>` as a commit-message footer.
+- **AI handoff**: add one concise update in the linked Issue or PR identifying `<from-agent/model> → <to-agent/model>` with remaining work and verification state.
+
+Treat initial `Drafted By` as immutable provenance; do not overwrite it during later handoff or revision. Routine wording, spelling, and formatting edits that do not affect technical judgment do not require additional attribution.
+
+The branch name `ai/<agent>/<task>` identifies routing or initial ownership only. It may omit the exact model and is not sufficient implementation provenance by itself. Do not rename a branch solely to rewrite provenance after a handoff.
+
+`Approved By` or equivalent approval text must identify the actual user or maintainer with decision authority. AI drafting, synthesis, review, or implementation never implies approval authority.
 
 Do not infer the AI model from the GitHub username, commit author, writing style, or branch history when explicit attribution exists.
 
@@ -93,6 +96,8 @@ Do not create a generic `docs/research/` directory merely because research occur
 ## Pull requests and checks
 
 Merge task branches through focused pull requests. Before merge, confirm that applicable tests, lint, type checks, builds, and other required checks pass, and that the diff contains no secrets, debug artifacts, unexpected files, or out-of-scope changes.
+
+Use the inherited account-wide PR template unless the repository has a justified local override. Keep `Implemented By` accurate for all material human/AI implementation contributors; do not treat the branch name or shared GitHub account as a substitute for model attribution.
 
 A PR implementing a significant technical decision must link the approved Ideas Discussion. Do not hide an unapproved architecture or other major direction change inside an ordinary feature or bug-fix PR.
 
@@ -117,7 +122,7 @@ When this repository uses a release lifecycle and its ecosystem does not require
 
 Prefer Conventional Commits and keep each commit understandable on its own.
 
-Commits record repository history; Issues and PRs record lifecycle state. Do not invent custom commit-state metadata.
+Commits record repository history; Issues and PRs record lifecycle state. Do not invent custom commit-state metadata. If a substantive AI change is committed without a PR, use the `AI-Agent: <agent/model>` footer required by the development guidelines.
 
 When work is incomplete, leave enough durable context in the linked Issue or PR for another agent to continue: goal, completed work, remaining work, verification, known risks, and next step. The receiving agent must verify repository state rather than rely only on the handoff summary.
 
