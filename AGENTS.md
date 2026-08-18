@@ -67,6 +67,8 @@ Significant changes include public API breaking changes, core architecture or ru
 
 When multiple humans or AI tools operate through the same GitHub account, GitHub's author identity records the operator account, not necessarily the actual contributor. Material AI participation must therefore be recorded in the nearest Git/GitHub native development object; do not create a separate provenance log.
 
+For every AI provenance field, record the provider/agent and exact model when the runtime exposes it, for example `ChatGPT / GPT-5.6 Sol`. If the exact model is unavailable, write `<provider/agent> / model unknown`; never infer or guess the model from product name, GitHub account, writing style, or branch name.
+
 Use this fixed mapping:
 
 - **Ideas Discussion / Issue initial draft**: `Drafted By: <human-or-agent/model>`.
