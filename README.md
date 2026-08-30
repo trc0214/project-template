@@ -10,7 +10,7 @@ Use the narrowest durable layer that owns the concern:
 2. **`trc0214/project-template` scaffold** — files that should actually be copied into each new repository, such as `README.md`, `AGENTS.md`, `.gitignore`, `.env.example`, `.editorconfig`, and `.gitattributes`.
 3. **Project-specific configuration** — dependency manifests and lockfiles, CI/CD, `LICENSE`, `CODEOWNERS`, dependency automation, security tooling, deployment, release configuration, and other ecosystem-specific controls only when applicable.
 
-The public `trc0214/.github` repository now provides the shared Discussion, Issue, pull request, and contribution defaults. Their inheritance was verified in a repository without local overrides before the duplicate copies were removed from this template.
+The public `trc0214/.github` repository provides the shared Discussion, Issue, pull request, and contribution defaults. Their inheritance was verified in a repository without local overrides before the duplicate copies were removed from this template.
 
 ## Create a project
 
@@ -36,31 +36,51 @@ Template files encode repository content, not every GitHub repository setting. A
 5. Explicitly choose the generated repository's license when it is public or intended for reuse. This generic template does not pre-create a root `LICENSE`.
 6. Enable GitHub Discussions when the project uses proposal or decision discussions. Use GitHub's native **Ideas** category for project-change proposals.
 7. Enable automatic deletion of merged head branches when the repository follows the short-lived task-branch policy.
-8. Use branch protection / rulesets when enforcement is needed; for a protected `main`, require pull requests and add required status checks only when real CI checks exist.
+8. Use branch protection / rulesets when enforcement is needed; for a protected `main`, require pull requests and add required status checks only when real CI checks exist. Disable force-push on `main`; consider disabling force-push on shared `task/*` branches when the repository relies on multi-agent handoff history.
 9. Add project-specific GitHub Actions only when the repository has real repeatable work such as test, lint, type check, build, code generation, or deployment. Do not add empty CI.
 10. If the project has meaningful release versions, use Git tags and GitHub Releases. Unless the ecosystem requires another scheme, use `vMAJOR.MINOR.PATCH` tags and Semantic Versioning; do not move or reuse published release tags.
+11. When multi-AI tasks rely on per-commit provenance and diagnostic history, enable merge commits and use them by default for `task/*` pull requests unless the project explicitly chooses another strategy.
 
 ## GitHub-native workflow
 
 Ordinary implementation work begins with an Issue. Reproducible defects use a Bug Report Issue Form. Proposals to change or improve the project belong in the native **Ideas** Discussion category. Significant technical changes require an approved Ideas Discussion before implementation:
 
-`Ideas Discussion → Approved decision → Issue → Pull Request → Review / Checks → Merge`
+`Ideas Discussion → Approved decision → Issue → task branch → Pull Request → Review / Checks → Merge`
 
 All standard Issue Forms require `Drafted By` for the actual human or AI agent/model that produced the initial Issue content. Preserve that value as immutable provenance; later AI revisions use `AI-Contributor: <agent/model>` comments instead of overwriting the original attribution. If Blank issue, GitHub CLI, API, or automation creates an Issue without the standard Form, put `Drafted By: <human-or-agent/model>` at the top of the Issue body before creation.
 
 - **Ideas Discussion** — feature, architecture, refactor, migration, security, performance, or other project-change proposals; significant decisions and their final decision record remain in the same Discussion.
 - **Bug Issue** — reproducible incorrect behavior or regression with evidence and impact.
 - **Implementation Issue** — approved or otherwise well-defined work, scope, acceptance criteria, dependencies, and verification.
-- **Pull Request** — implementation, review, verification, and merge.
+- **Task branch** — the working line for one Issue/task; it represents the work, not the current agent.
+- **Pull Request** — implementation, review, verification, aggregate provenance, and merge.
 - **README / AGENTS** — stable repository-specific instructions.
 
 Do not create parallel ADR, decision-ledger, AI-review-report, provenance-log, custom Architecture category, or custom lifecycle files unless the project has a concrete need that GitHub does not cover.
+
+## Multi-agent implementation workflow
+
+Keep normal multi-agent work linear and low-overhead:
+
+1. Create one short-lived task branch. When an Issue exists, prefer `task/<issue-number>-<short-name>`.
+2. Keep one active writer on that task branch at a time.
+3. If work is expected to span sessions or agents, open a Draft PR early so diff, checks, comments, provenance, and handoff context stay in one durable place.
+4. When one agent stops and another takes over, commit and push meaningful work when possible, leave a concise handoff, and continue on the **same task branch**.
+5. Use commit SHAs as exact recovery points. If current HEAD is unverified or broken, record the last verified SHA in the handoff instead of creating a checkpoint branch or custom commit state.
+6. Every material AI commit records `AI-Agent: <agent/model>` in the commit footer. The PR body records aggregate `Implemented By` provenance for all material contributors.
+7. Treat published shared task history as durable. Do not force-push or rebase it by default; revert bad published commits when history preservation is safer.
+8. Use a temporary `experiment/<agent>/<task>` branch only for deliberately isolated risky or alternative work. Successful pieces may be merged or cherry-picked; unsuccessful experiments can be discarded without making experiment branches part of every task.
+9. Before final merge, run applicable checks and review the full diff. For multi-AI task branches, default to a merge commit so original commit SHAs, AI trailers, and `git bisect` granularity survive in `main`.
+10. Merge the PR, close the linked Issue with the PR when appropriate, and delete the task branch.
+
+If a task can be split into genuinely independent parallel work, prefer separate Issues/task branches rather than concurrent writers on one branch.
 
 ## Cross-project engineering conventions
 
 - **EditorConfig** provides a minimal cross-editor baseline: UTF-8, LF, final newline, and trailing-whitespace handling. Language-specific indentation belongs in project-specific overrides.
 - **Git attributes** normalize text handling and explicitly mark common binary formats; project-specific binary/diff/merge rules may extend the baseline.
-- **Conventional Commits** are preferred for readable, machine-processable history.
+- **Conventional Commits** are preferred for readable, machine-processable history. Keep commits as understandable logical changes so review, revert, blame, and `git bisect` remain useful.
+- **AI commit provenance** uses the `AI-Agent: <agent/model>` trailer for material AI commits when multiple agents may share one Git identity or task branch.
 - **Semantic Versioning** is used only when the project has a meaningful versioned public interface and no higher-priority ecosystem rule.
 - **OpenSSF-aligned controls** such as branch protection, code review, dependency update tooling, CI tests, pinned dependencies, security policy, SAST, minimal workflow token permissions, and signed releases are added when the repository's exposure and lifecycle justify them. They are not represented by empty generic files.
 

@@ -28,8 +28,10 @@ The public `trc0214/.github` repository provides the shared Discussion/Issue/PR 
 GitHub is the canonical source for source code, branches, commits, Discussions, Issues, pull requests, checks, Releases, repository-coupled technical research/documentation, and implementation state. Chat history must not be the only project record.
 
 - Keep `main` stable and do not perform feature development directly on it.
-- Use one short-lived branch per task. AI branches use `ai/<agent>/<task>`; general work may use `feature/`, `fix/`, `docs/`, `refactor/`, `test/`, or `chore/`.
-- One implementation task should have one primary owner at a time. Other agents may review, research, test, document, or own clearly separated subtasks.
+- Use one short-lived task branch for each implementation task. When an Issue exists, prefer `task/<issue-number>-<short-name>`; otherwise use a concise `task/<short-name>`.
+- The task branch identifies the work, not the current human or AI agent. When ownership changes, the next agent continues on the same task branch after verifying repository state.
+- Keep one active writer per task branch at a time. Split genuinely independent parallel work into separate Issues/task branches instead of having multiple agents concurrently rewrite the same branch.
+- Create a temporary `experiment/<agent>/<task>` branch only when deliberate isolation is justified, such as a risky alternative implementation or comparison. It is not part of the normal workflow and should be deleted when no longer useful.
 - Before editing, read `README.md`, relevant repository instructions, and the related Discussion / Issue / PR. Check the current branch, scope, existing changes, and available test or build commands.
 - Keep changes focused. Do not perform unrelated refactors because a different architecture is preferred.
 
@@ -75,12 +77,12 @@ Use this fixed mapping:
 - **Later AI planning, revision, or synthesis**: `AI-Contributor: <agent/model>` plus `Role: Planning`, `Role: Revision`, or `Role: Synthesis` in a concise comment.
 - **Pull Request implementation**: `Implemented By: <human-or-agent/model>` in the PR body. If multiple agents materially changed implementation, tests, refactors, configuration, or generated code, list each agent/model with a concise role.
 - **AI review**: begin the review body with `AI-Reviewer: <agent/model>`; add `Review-Focus: <area>` only when the review has a specialized scope.
-- **Substantive AI commit without a PR**: add `AI-Agent: <agent/model>` as a commit-message footer.
+- **Material AI commit**: add `AI-Agent: <agent/model>` as a commit-message footer. This provides commit-level provenance when multiple agents share one task branch.
 - **AI handoff**: add one concise update in the linked Issue or PR identifying `<from-agent/model> → <to-agent/model>` with remaining work and verification state.
 
 Treat initial `Drafted By` as immutable provenance; do not overwrite it during later handoff or revision. Routine wording, spelling, and formatting edits that do not affect technical judgment do not require additional attribution.
 
-The branch name `ai/<agent>/<task>` identifies routing or initial ownership only. It may omit the exact model and is not sufficient implementation provenance by itself. Do not rename a branch solely to rewrite provenance after a handoff.
+Task branch names do not encode agent identity and are not implementation provenance. Temporary experiment branches may contain an agent name for isolation/routing, but provenance still comes from the Git/GitHub records above.
 
 `Approved By` or equivalent approval text must identify the actual user or maintainer with decision authority. AI drafting, synthesis, review, or implementation never implies approval authority.
 
@@ -97,13 +99,17 @@ Do not create a generic `docs/research/` directory merely because research occur
 
 ## Pull requests and checks
 
-Merge task branches through focused pull requests. Before merge, confirm that applicable tests, lint, type checks, builds, and other required checks pass, and that the diff contains no secrets, debug artifacts, unexpected files, or out-of-scope changes.
+Merge task branches through focused pull requests. For work expected to span multiple sessions or agents, opening a Draft PR early is recommended so the diff, checks, review context, provenance, and handoff history remain durable in one place.
 
-Use the inherited account-wide PR template unless the repository has a justified local override. Keep `Implemented By` accurate for all material human/AI implementation contributors; do not treat the branch name or shared GitHub account as a substitute for model attribution.
+Before merge, confirm that applicable tests, lint, type checks, builds, and other required checks pass, and that the diff contains no secrets, debug artifacts, unexpected files, or out-of-scope changes.
+
+Use the inherited account-wide PR template unless the repository has a justified local override. Keep `Implemented By` accurate for all material human/AI implementation contributors; do not treat a branch name or shared GitHub account as a substitute for model attribution.
 
 A PR implementing a significant technical decision must link the approved Ideas Discussion. Do not hide an unapproved architecture or other major direction change inside an ordinary feature or bug-fix PR.
 
 If GitHub Actions workflows exist, treat their required checks as the primary automated verification. Do not bypass failing checks without an explicit project-specific reason.
+
+For multi-AI task branches, default to a **merge commit** when merging into `main` so original commit SHAs, `AI-Agent` trailers, and `git bisect` granularity remain available in the durable history. A repository may explicitly choose another merge strategy when ecosystem or project requirements justify the tradeoff; do not squash material multi-AI history by default.
 
 ## Cross-project engineering baseline
 
@@ -122,11 +128,26 @@ When this repository uses a release lifecycle and its ecosystem does not require
 
 ## Commits and handoff
 
-Prefer Conventional Commits and keep each commit understandable on its own.
+Prefer Conventional Commits and keep each commit as one understandable logical change. Avoid large mixed commits because they reduce review, revert, blame, and `git bisect` value.
 
-Commits record repository history; Issues and PRs record lifecycle state. Do not invent custom commit-state metadata. If a substantive AI change is committed without a PR, use the `AI-Agent: <agent/model>` footer required by the development guidelines.
+Commits record repository history; Issues and PRs record lifecycle state. Do not invent custom commit-state metadata. Commit SHAs are the recovery/checkpoint identifiers; do not create special checkpoint branches or empty checkpoint commits merely to mark an agent handoff.
 
-When work is incomplete, leave enough durable context in the linked Issue or PR for another agent to continue: goal, completed work, remaining work, verification, known risks, and next step. The receiving agent must verify repository state rather than rely only on the handoff summary.
+Every material AI commit must include the `AI-Agent: <agent/model>` footer. The PR-level `Implemented By` field remains the aggregate implementation provenance for the completed task.
+
+Once a task branch has been pushed and is shared across agents, treat its published history as durable: do not force-push or rebase published commits by default. If the task must incorporate newer `main` changes, merge `main` into the task branch and re-run applicable verification unless a project-specific rule explicitly requires another strategy. Use `git revert` for bad published commits when preserving shared history is safer than rewriting it.
+
+When work is incomplete and ownership changes, continue on the same task branch. Leave a concise handoff in the linked Issue or PR containing:
+
+- `<from-agent/model> → <to-agent/model>`
+- completed work
+- remaining work
+- verification state
+- `Last Verified Commit: <SHA>` only when current HEAD is not fully verified
+- known risks only when they exist
+
+Do not repeat information that Git, the Issue, or the PR already records reliably. The receiving agent must verify branch state, recent commits, diff, and checks rather than rely only on the handoff summary.
+
+If the current HEAD is broken or unverified, the last verified commit SHA is the recovery reference. Inspect later commits individually, revert bad published commits, or selectively reuse good commits rather than assuming the previous agent's HEAD is correct.
 
 ## Dependencies, secrets, and generated content
 
